@@ -38,7 +38,13 @@ class Poltergeist.WebPage
 
   injectAgent: ->
     if @native.evaluate(-> typeof __poltergeist) == "undefined"
-      @native.injectJs("#{phantom.libraryPath}/agent.js")
+      @native.injectJs "#{phantom.libraryPath}/agent.js"
+      for extension in WebPage.EXTENSIONS
+        @native.injectJs extension
+
+  injectExtension: (file) ->
+    WebPage.EXTENSIONS.push file
+    @native.injectJs file
 
   onConsoleMessageNative: (message) ->
     if message == '__DOMContentLoaded'

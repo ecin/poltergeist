@@ -161,6 +161,12 @@ module Capybara::Poltergeist
       command 'remove_cookie', name
     end
 
+    def extensions=(names)
+      Array(names).each do |name|
+        command 'add_extension', name
+      end
+    end
+
     def command(name, *args)
       message = { 'name' => name, 'args' => args }
       log message.inspect
